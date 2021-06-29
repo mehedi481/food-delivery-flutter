@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/pages/login_page.dart';
+import 'package:food_delivery/pages/signup_page.dart';
 import 'package:food_delivery/pages/welcomePage.dart';
 
 void main() {
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget{
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Food Delivery",
-      home: LoginPage(), 
+      home: SignUpPage(), 
     );
   }
 }
