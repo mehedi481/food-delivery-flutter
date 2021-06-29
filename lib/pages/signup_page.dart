@@ -9,7 +9,12 @@ class SignUpPage extends StatelessWidget {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        leading: Icon(Icons.arrow_back_ios),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -36,25 +41,25 @@ class SignUpPage extends StatelessWidget {
                 children: [
                   myTextField(hintText: "Name", icon: Icons.person),
                   SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
                   myTextField(hintText: "Email", icon: Icons.mail),
                   SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
                   myTextField(hintText: "Password", icon: Icons.lock),
                   SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
                   myTextField(hintText: "Confirm Password", icon: Icons.lock),
                   SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
                 ],
               ),
             ),
             SizedBox(
-              height: 80,
+              height: 60,
             ),
             Container(
               child: Row(

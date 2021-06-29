@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/pages/signup_page.dart';
+
+import 'login_page.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -38,15 +41,25 @@ class WelcomePage extends StatelessWidget {
                       ],
                     ),
                     button(
-                      name: "Login",
-                      bgColor: Colors.green,
-                      textColor: Colors.white,
-                    ),
+                        name: "Login",
+                        bgColor: Colors.green,
+                        textColor: Colors.white,
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginPage()));
+                        }),
                     button(
-                      name: "SignUp",
-                      bgColor: Colors.white,
-                      textColor: Colors.green,
-                    ),
+                        name: "SignUp",
+                        bgColor: Colors.white,
+                        textColor: Colors.green,
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignUpPage()));
+                        }),
                   ],
                 ),
               ),
@@ -57,7 +70,11 @@ class WelcomePage extends StatelessWidget {
     );
   }
 
-  Widget button({@required name, @required bgColor, @required textColor}) {
+  Widget button(
+      {@required name,
+      @required bgColor,
+      @required textColor,
+      @required onPressed}) {
     return Padding(
       padding: const EdgeInsets.only(
         left: 20.0,
@@ -71,7 +88,7 @@ class WelcomePage extends StatelessWidget {
             name,
             style: TextStyle(color: textColor),
           ),
-          onPressed: () {},
+          onPressed: onPressed,
           style: ButtonStyle(
             side: MaterialStateProperty.all<BorderSide>(
               BorderSide(
