@@ -28,22 +28,23 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 25,
+            height: 20,
           ),
           Expanded(
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 30),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    myTextField(hintText: "Username", icon: Icons.person),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    myTextField(hintText: "Password", icon: Icons.lock),
-                  ],
-                ),
-              )),
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  myTextField(hintText: "Username", icon: Icons.person),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  myTextField(hintText: "Password", icon: Icons.lock),
+                ],
+              ),
+            ),
+          ),
           Container(
             width: 150,
             decoration: BoxDecoration(
@@ -68,9 +69,15 @@ class LoginPage extends StatelessWidget {
                 "New User?",
                 style: TextStyle(color: Colors.white),
               ),
-              Text(
-                "Register now",
-                style: TextStyle(color: Colors.red),
+              SizedBox(
+                width: 10,
+              ),
+              InkWell(
+                onTap: () {},
+                child: Text(
+                  "Register now",
+                  style: TextStyle(color: Colors.red),
+                ),
               ),
             ],
           ),
