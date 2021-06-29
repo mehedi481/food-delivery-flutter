@@ -28,7 +28,7 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 50,
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 30),
