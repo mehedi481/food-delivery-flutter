@@ -48,7 +48,7 @@ class LoginPage extends StatelessWidget {
           Container(
             width: 150,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: BorderRadius.circular(24),
               color: Colors.red,
             ),
             child: MaterialButton(
