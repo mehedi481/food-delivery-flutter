@@ -6,32 +6,31 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
         leading: Icon(Icons.arrow_back_ios),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(
-                "Login",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 35,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  "Login",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 35,
+                  ),
                 ),
               ),
             ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Expanded(
-            child: Container(
+            SizedBox(
+              height: 20,
+            ),
+            Container(
               margin: const EdgeInsets.symmetric(horizontal: 30),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -44,47 +43,52 @@ class LoginPage extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-          Container(
-            width: 150,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24),
-              color: Colors.red,
+            SizedBox(
+              height: 50,
             ),
-            child: MaterialButton(
-              onPressed: () {},
-              child: Text(
-                "Login",
-                style: TextStyle(color: Colors.white),
+            Container(
+              width: 150,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(24),
+                color: Colors.red,
               ),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "New User?",
-                style: TextStyle(color: Colors.white),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              InkWell(
-                onTap: () {},
+              child: MaterialButton(
+                onPressed: () {},
                 child: Text(
-                  "Register now",
-                  style: TextStyle(color: Colors.red),
+                  "Login",
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
-            ],
-          ),
-          SizedBox(
-            height: 30,
-          ),
-        ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "New User?",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: Text(
+                      "Register now",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+          ],
+        ),
       ),
     );
   }

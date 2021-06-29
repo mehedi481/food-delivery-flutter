@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget{
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Food Delivery",
-      home: SignUpPage(), 
+      home: LoginPage(), 
     );
   }
 }
