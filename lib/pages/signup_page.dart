@@ -39,7 +39,11 @@ class SignUpPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  myTextField(hintText: "Name", icon: Icons.person),
+                  myTextField(hintText: "First Name", icon: Icons.person),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  myTextField(hintText: "Last Name", icon: Icons.person),
                   SizedBox(
                     height: 15,
                   ),
@@ -47,11 +51,7 @@ class SignUpPage extends StatelessWidget {
                   SizedBox(
                     height: 15,
                   ),
-                  myTextField(hintText: "Password", icon: Icons.lock),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  myTextField(hintText: "Confirm Password", icon: Icons.lock),
+                  myTextField(hintText: "Password", icon: Icons.lock,obscure: true),
                   SizedBox(
                     height: 15,
                   ),
@@ -105,8 +105,9 @@ class SignUpPage extends StatelessWidget {
     );
   }
 
-  Widget myTextField({@required hintText, @required icon}) {
+  Widget myTextField({@required hintText, @required icon,obscure}) {
     return TextFormField(
+      obscureText: obscure ?? false,
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
         prefixIcon: Icon(

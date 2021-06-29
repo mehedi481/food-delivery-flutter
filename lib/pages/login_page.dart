@@ -45,7 +45,8 @@ class LoginPage extends StatelessWidget {
                   SizedBox(
                     height: 25,
                   ),
-                  myTextField(hintText: "Password", icon: Icons.lock),
+                  myTextField(
+                      hintText: "Password", icon: Icons.lock, obscure: true),
                 ],
               ),
             ),
@@ -106,8 +107,9 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget myTextField({@required hintText, @required icon}) {
+  Widget myTextField({@required hintText, @required icon, obscure}) {
     return TextFormField(
+      obscureText: obscure ?? false,
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
         prefixIcon: Icon(
