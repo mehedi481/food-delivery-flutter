@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,12 +13,56 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  late UserCredential userCredential;
+
   RegExp regExp = RegExp(SignUpPage.pattern.toString());
 
   TextEditingController firstName = TextEditingController();
   TextEditingController lastName = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+
+  Future sendData() async {
+    print("sendData function called");
+    try {
+      //Create User
+      userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email.text,
+        password: password.text,
+      );
+
+      //Store User Data
+      await FirebaseFirestore.instance
+          .collection("userData")
+          .doc(userCredential.user!.uid)
+          .set({
+        'firstName': firstName.text,
+        'lastName': lastName.text,
+        'email': email.text,
+        'password': password.text,
+        'userId': userCredential.user!.uid,
+      });
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("The password provided is too weak."),
+          ),
+        );
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("The account already exists for that email."),
+          ),
+        );
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   void clearField() {
     firstName.clear();
@@ -26,50 +72,61 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   void validation() {
-    if (firstName.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text(
-          "First name is Required !",
-          style: TextStyle(color: Colors.red),
+    if (firstName.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "First name is Required !",
+            style: TextStyle(color: Colors.red),
+          ),
+          duration: Duration(milliseconds: 500),
         ),
-        duration: Duration(milliseconds: 500),
-      ));
+      );
     }
-    if (lastName.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text(
-          "Last name is Required !",
-          style: TextStyle(color: Colors.red),
+    if (lastName.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Last name is Required !",
+            style: TextStyle(color: Colors.red),
+          ),
+          duration: Duration(milliseconds: 500),
         ),
-        duration: Duration(milliseconds: 500),
-      ));
+      );
     }
-    if (email.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text(
-          "Email name is Required !",
-          style: TextStyle(color: Colors.red),
+    if (email.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Email name is Required !",
+            style: TextStyle(color: Colors.red),
+          ),
+          duration: Duration(milliseconds: 500),
         ),
-        duration: Duration(milliseconds: 500),
-      ));
+      );
     } else if (!regExp.hasMatch(email.text)) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text(
-          "Please enter valid Email",
-          style: TextStyle(color: Colors.red),
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Please enter valid Email",
+            style: TextStyle(color: Colors.red),
+          ),
+          duration: Duration(milliseconds: 500),
         ),
-        duration: Duration(milliseconds: 500),
-      ));
-      return;
+      );
     }
-    if (password.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text(
-          "Password name is Required !",
-          style: TextStyle(color: Colors.red),
+    if (password.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Password name is Required !",
+            style: TextStyle(color: Colors.red),
+          ),
+          duration: Duration(milliseconds: 500),
         ),
-        duration: Duration(milliseconds: 500),
-      ));
+      );
+    } else {
+      sendData();
     }
   }
 
