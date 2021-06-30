@@ -27,25 +27,49 @@ class _SignUpPageState extends State<SignUpPage> {
 
   void validation() {
     if (firstName.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("First name is Required !")));
-      
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(
+          "First name is Required !",
+          style: TextStyle(color: Colors.red),
+        ),
+        duration: Duration(milliseconds: 500),
+      ));
     }
     if (lastName.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Last name is Required !")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(
+          "Last name is Required !",
+          style: TextStyle(color: Colors.red),
+        ),
+        duration: Duration(milliseconds: 500),
+      ));
     }
     if (email.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Email name is Required !")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(
+          "Email name is Required !",
+          style: TextStyle(color: Colors.red),
+        ),
+        duration: Duration(milliseconds: 500),
+      ));
     } else if (!regExp.hasMatch(email.text)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Please enter valid Email")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(
+          "Please enter valid Email",
+          style: TextStyle(color: Colors.red),
+        ),
+        duration: Duration(milliseconds: 500),
+      ));
       return;
     }
     if (password.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Password name is Required !")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(
+          "Password name is Required !",
+          style: TextStyle(color: Colors.red),
+        ),
+        duration: Duration(milliseconds: 500),
+      ));
     }
   }
 
