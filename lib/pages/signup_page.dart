@@ -1,7 +1,53 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
+  static Pattern pattern =
+      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+
+  @override
+  _SignUpPageState createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  RegExp regExp = RegExp(SignUpPage.pattern.toString());
+
+  TextEditingController firstName = TextEditingController();
+  TextEditingController lastName = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+
+  void clearField() {
+    firstName.clear();
+    lastName.clear();
+    email.clear();
+    password.clear();
+  }
+
+  void validation() {
+    if (firstName.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("First name is Required !")));
+      
+    }
+    if (lastName.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Last name is Required !")));
+    }
+    if (email.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Email name is Required !")));
+    } else if (!regExp.hasMatch(email.text)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Please enter valid Email")));
+      return;
+    }
+    if (password.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Password name is Required !")));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,19 +85,30 @@ class SignUpPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  myTextField(hintText: "First Name", icon: Icons.person),
+                  myTextField(
+                      hintText: "First Name",
+                      icon: Icons.person,
+                      controller: firstName),
                   SizedBox(
                     height: 15,
                   ),
-                  myTextField(hintText: "Last Name", icon: Icons.person),
+                  myTextField(
+                      hintText: "Last Name",
+                      icon: Icons.person,
+                      controller: lastName),
                   SizedBox(
                     height: 15,
                   ),
-                  myTextField(hintText: "Email", icon: Icons.mail),
+                  myTextField(
+                      hintText: "Email", icon: Icons.mail, controller: email),
                   SizedBox(
                     height: 15,
                   ),
-                  myTextField(hintText: "Password", icon: Icons.lock,obscure: true),
+                  myTextField(
+                      hintText: "Password",
+                      icon: Icons.lock,
+                      obscure: true,
+                      controller: password),
                   SizedBox(
                     height: 15,
                   ),
@@ -66,11 +123,17 @@ class SignUpPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   myButton(
+                    onPressed: () {
+                      clearField();
+                    },
                     buttonColor: Colors.white,
                     buttonName: "Cancle",
                     textColor: Colors.black,
                   ),
                   myButton(
+                    onPressed: () {
+                      validation();
+                    },
                     buttonColor: Colors.red,
                     buttonName: "Register",
                     textColor: Colors.white,
@@ -88,7 +151,10 @@ class SignUpPage extends StatelessWidget {
   }
 
   Widget myButton(
-      {@required buttonColor, @required buttonName, @required textColor}) {
+      {@required buttonColor,
+      @required buttonName,
+      @required textColor,
+      @required onPressed}) {
     return Container(
       width: 150,
       decoration: BoxDecoration(
@@ -96,7 +162,7 @@ class SignUpPage extends StatelessWidget {
         color: buttonColor,
       ),
       child: MaterialButton(
-        onPressed: () {},
+        onPressed: onPressed,
         child: Text(
           buttonName,
           style: TextStyle(color: textColor),
@@ -105,8 +171,10 @@ class SignUpPage extends StatelessWidget {
     );
   }
 
-  Widget myTextField({@required hintText, @required icon,obscure}) {
+  Widget myTextField(
+      {@required hintText, @required icon, @required controller, obscure}) {
     return TextFormField(
+      controller: controller,
       obscureText: obscure ?? false,
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(

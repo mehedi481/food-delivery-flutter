@@ -1,8 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/pages/signup_page.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  TextEditingController userName = TextEditingController();
+  TextEditingController password = TextEditingController();
+
+  void validation() {
+    if (userName.text.isEmpty) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Please enter your UserName"),
+              actions: [
+                MaterialButton(
+                  color: Colors.blue,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    "OK",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )
+              ],
+            );
+          });
+    } else if (password.text.isEmpty) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Please enter your Password"),
+              actions: [
+                MaterialButton(
+                  color: Colors.blue,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    "OK",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )
+              ],
+            );
+          });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +93,18 @@ class LoginPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  myTextField(hintText: "Username", icon: Icons.person),
+                  myTextField(
+                      hintText: "Username",
+                      icon: Icons.person,
+                      controller: userName),
                   SizedBox(
                     height: 25,
                   ),
                   myTextField(
-                      hintText: "Password", icon: Icons.lock, obscure: true),
+                      hintText: "Password",
+                      icon: Icons.lock,
+                      obscure: true,
+                      controller: password),
                 ],
               ),
             ),
@@ -60,7 +118,9 @@ class LoginPage extends StatelessWidget {
                 color: Colors.red,
               ),
               child: MaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  validation();
+                },
                 child: Text(
                   "Login",
                   style: TextStyle(color: Colors.white),
@@ -107,8 +167,10 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget myTextField({@required hintText, @required icon, obscure}) {
+  Widget myTextField(
+      {@required hintText, @required icon, @required controller, obscure}) {
     return TextFormField(
+      controller: controller,
       obscureText: obscure ?? false,
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
