@@ -37,10 +37,10 @@ class _SignUpPageState extends State<SignUpPage> {
           .collection("userData")
           .doc(userCredential.user!.uid)
           .set({
-        'firstName': firstName.text,
-        'lastName': lastName.text,
-        'email': email.text,
-        'password': password.text,
+        'firstName': firstName.text.trim(),  //TODO: use trim() to avoid white space leading and trailing
+        'lastName': lastName.text.trim(),
+        'email': email.text.trim(),
+        'password': password.text.trim(),
         'userId': userCredential.user!.uid,
       });
     } on FirebaseAuthException catch (e) {
@@ -70,9 +70,10 @@ class _SignUpPageState extends State<SignUpPage> {
     email.clear();
     password.clear();
   }
-
-  void validation() {
-    if (firstName.text.isEmpty) {
+  
+  //TODO: use trim() to avoid white space leading and trailing
+  void validation() { 
+    if (firstName.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
@@ -83,7 +84,7 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       );
     }
-    if (lastName.text.isEmpty) {
+    if (lastName.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
@@ -94,7 +95,7 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       );
     }
-    if (email.text.isEmpty) {
+    if (email.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
@@ -115,7 +116,7 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       );
     }
-    if (password.text.isEmpty) {
+    if (password.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
