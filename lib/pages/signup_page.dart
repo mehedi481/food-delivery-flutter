@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/pages/login_page.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   late UserCredential userCredential;
+  bool isLoading = false;
 
   RegExp regExp = RegExp(SignUpPage.pattern.toString());
 
@@ -23,7 +25,7 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController password = TextEditingController();
 
   Future sendData() async {
-    print("sendData function called");
+    print("sendData function is called");
     try {
       //Create User
       userCredential =
@@ -37,7 +39,8 @@ class _SignUpPageState extends State<SignUpPage> {
           .collection("userData")
           .doc(userCredential.user!.uid)
           .set({
-        'firstName': firstName.text.trim(),  //TODO: use trim() to avoid white space leading and trailing
+        'firstName': firstName.text
+            .trim(), //TODO: use trim() to avoid white space leading and trailing
         'lastName': lastName.text.trim(),
         'email': email.text.trim(),
         'password': password.text.trim(),
@@ -61,7 +64,37 @@ class _SignUpPageState extends State<SignUpPage> {
       }
     } catch (e) {
       print(e.toString());
+      setState(() {
+        isLoading = false;
+      });
     }
+    setState(() {
+      isLoading = false;
+      print("isloading false");
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Account Create Successfully"),
+              actions: [
+                MaterialButton(
+                  onPressed: () {
+                    clearField();
+                    Navigator.pushAndRemoveUntil<void>(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        ModalRoute.withName("/"));
+                  },
+                  color: Colors.blue,
+                  child: Text(
+                    "Log in Now",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )
+              ],
+            );
+          });
+    });
   }
 
   void clearField() {
@@ -70,9 +103,9 @@ class _SignUpPageState extends State<SignUpPage> {
     email.clear();
     password.clear();
   }
-  
+
   //TODO: use trim() to avoid white space leading and trailing
-  void validation() { 
+  void validation() {
     if (firstName.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -127,6 +160,10 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       );
     } else {
+      setState(() {
+        isLoading = true;
+        print("isloading true");
+      });
       sendData();
     }
   }
@@ -201,27 +238,32 @@ class _SignUpPageState extends State<SignUpPage> {
               height: 60,
             ),
             Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  myButton(
-                    onPressed: () {
-                      clearField();
-                    },
-                    buttonColor: Colors.white,
-                    buttonName: "Cancle",
-                    textColor: Colors.black,
-                  ),
-                  myButton(
-                    onPressed: () {
-                      validation();
-                    },
-                    buttonColor: Colors.red,
-                    buttonName: "Register",
-                    textColor: Colors.white,
-                  ),
-                ],
-              ),
+              child: isLoading == true
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [CircularProgressIndicator()],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        myButton(
+                          onPressed: () {
+                            clearField();
+                          },
+                          buttonColor: Colors.white,
+                          buttonName: "Cancle",
+                          textColor: Colors.black,
+                        ),
+                        myButton(
+                          onPressed: () {
+                            validation();
+                          },
+                          buttonColor: Colors.red,
+                          buttonName: "Register",
+                          textColor: Colors.white,
+                        ),
+                      ],
+                    ),
             ),
             SizedBox(
               height: 30,
