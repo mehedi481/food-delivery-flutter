@@ -72,6 +72,7 @@ class _SignUpPageState extends State<SignUpPage> {
       isLoading = false;
       print("isloading false");
       showDialog(
+        barrierDismissible: false,
           context: context,
           builder: (context) {
             return AlertDialog(
