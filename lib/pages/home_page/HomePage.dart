@@ -42,8 +42,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                     hintText: "Search",
                     hintStyle: TextStyle(color: Colors.white),
-                    filled: true,
                     fillColor: Color(0xff3a3e3e),
+                    filled: true,
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(10),
@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               GridView.count(
-                physics: ScrollPhysics(), //Note:This is very important if Gridview inside of ListView
+                physics:ScrollPhysics(), //Note:This is very important if Gridview inside of ListView
                 crossAxisCount: 2,
                 shrinkWrap: true,
                 crossAxisSpacing: 20,
@@ -100,23 +100,54 @@ class _HomePageState extends State<HomePage> {
                     imagePrice: 123,
                   ),
                   FoodItems(
-                    image: ImagePath.food_1,
-                    imageName: "Pizza",
-                    imagePrice: 123,
+                    image: ImagePath.food_2,
+                    imageName: "Drinks",
+                    imagePrice: 13,
                   ),
                   FoodItems(
-                    image: ImagePath.food_1,
-                    imageName: "Pizza",
-                    imagePrice: 123,
+                    image: ImagePath.food_4,
+                    imageName: "Brade",
+                    imagePrice: 23,
                   ),
                   FoodItems(
-                    image: ImagePath.food_1,
-                    imageName: "Pizza",
-                    imagePrice: 123,
+                    image: ImagePath.food_5,
+                    imageName: "Kabab",
+                    imagePrice: 12,
                   ),
                 ],
               ),
-              Container(height: 250, child: Text("Mehedi"))
+              Container(height: 50, child: Text("Mehedi")),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CategoriesFoodItems(
+                      image: ImagePath.allFood,
+                      imageName: "All",
+                    ),
+                    CategoriesFoodItems(
+                      image: ImagePath.food_1,
+                      imageName: "Pizza",
+                    ),
+                    CategoriesFoodItems(
+                      image: ImagePath.food_2,
+                      imageName: "Drinks",
+                    ),
+                    CategoriesFoodItems(
+                      image: ImagePath.food_4,
+                      imageName: "Brade",
+                    ),
+                    CategoriesFoodItems(
+                      image: ImagePath.food_5,
+                      imageName: "Kabab",
+                    ),
+                    CategoriesFoodItems(
+                      image: ImagePath.food_3,
+                      imageName: "Pasta",
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ],
