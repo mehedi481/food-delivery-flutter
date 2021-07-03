@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               GridView.count(
-                physics: NeverScrollableScrollPhysics(), //Note:This is very important if Gridview inside of ListView
+                physics: ScrollPhysics(), //Note:This is very important if Gridview inside of ListView
                 crossAxisCount: 2,
                 shrinkWrap: true,
                 crossAxisSpacing: 20,
