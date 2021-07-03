@@ -1,24 +1,54 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/pages/signup_page.dart';
 
+import 'home_page/HomePage.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
+  static Pattern pattern =
+      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController userName = TextEditingController();
+  RegExp regExp = RegExp(LoginPage.pattern.toString());
+  late UserCredential userCredential;
+  bool isLoading = false;
+
+  TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
+  Future loginAuth() async {
+    try {
+      userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email.text, password: password.text);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('No user found for that email.')));
+      } else if (e.code == 'wrong-password') {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Wrong password provided for that user.')));
+        print('Wrong password provided for that user.');
+      }
+    }
+    setState(() {
+      isLoading = false;
+      print("isLoading false");
+    });
+  }
+
   void validation() {
-    if (userName.text.isEmpty) {
+    if (email.text.isEmpty) {
       showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text("Please enter your UserName"),
+              title: Text("Please enter your email"),
               actions: [
                 MaterialButton(
                   color: Colors.blue,
@@ -33,7 +63,28 @@ class _LoginPageState extends State<LoginPage> {
               ],
             );
           });
-    } else if (password.text.isEmpty) {
+    } else if (!regExp.hasMatch(email.text)) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Email address not valid !"),
+              actions: [
+                MaterialButton(
+                  color: Colors.blue,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    "OK",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )
+              ],
+            );
+          });
+    }
+    else if (password.text.isEmpty) {
       showDialog(
           context: context,
           builder: (context) {
@@ -53,6 +104,11 @@ class _LoginPageState extends State<LoginPage> {
               ],
             );
           });
+    } else {
+      setState(() {
+        isLoading = true;
+      });
+      loginAuth();
     }
   }
 
@@ -94,9 +150,7 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   myTextField(
-                      hintText: "Username",
-                      icon: Icons.person,
-                      controller: userName),
+                      hintText: "Email", icon: Icons.person, controller: email),
                   SizedBox(
                     height: 25,
                   ),
@@ -111,22 +165,25 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: 50,
             ),
-            Container(
-              width: 150,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(24),
-                color: Colors.red,
-              ),
-              child: MaterialButton(
-                onPressed: () {
-                  validation();
-                },
-                child: Text(
-                  "Login",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
+            isLoading == true
+                ? Center(child: CircularProgressIndicator())
+                : Container(
+                    width: 150,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24),
+                      color: Colors.red,
+                    ),
+                    child: MaterialButton(
+                      onPressed: () {
+                        validation();
+                        
+                      },
+                      child: Text(
+                        "Login",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
             SizedBox(
               height: 20,
             ),

@@ -24,8 +24,8 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
-  Future sendData() async {
-    print("sendData function is called");
+  void createAccount() async {
+    print("createAccount function is called");
     try {
       //Create User
       userCredential =
@@ -39,8 +39,7 @@ class _SignUpPageState extends State<SignUpPage> {
           .collection("userData")
           .doc(userCredential.user!.uid)
           .set({
-        'firstName': firstName.text
-            .trim(), //TODO: use trim() to avoid white space leading and trailing
+        'firstName': firstName.text.trim(), //TODO: use trim() to avoid white space leading and trailing
         'lastName': lastName.text.trim(),
         'email': email.text.trim(),
         'password': password.text.trim(),
@@ -165,7 +164,7 @@ class _SignUpPageState extends State<SignUpPage> {
         isLoading = true;
         print("isloading true");
       });
-      sendData();
+      createAccount();
     }
   }
 
