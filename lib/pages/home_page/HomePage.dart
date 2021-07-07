@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/helper/image_path.dart';
 import 'package:food_delivery/pages/home_page/components/categories_food_items.dart';
+import 'package:food_delivery/pages/home_page/components/drawer.dart';
 import 'package:food_delivery/pages/home_page/components/food_items.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,12 +15,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MyDrawer(),
       appBar: AppBar(
         elevation: 0.0,
-        leading: IconButton(
-          icon: Icon(Icons.sort),
-          onPressed: () {},
-        ),
         actions: [
           Padding(
             padding: const EdgeInsets.all(5.0),
@@ -86,7 +84,8 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               GridView.count(
-                physics:ScrollPhysics(), //Note:This is very important if Gridview inside of ListView
+                physics:
+                    ScrollPhysics(), //Note:This is very important if Gridview inside of ListView
                 crossAxisCount: 2,
                 shrinkWrap: true,
                 crossAxisSpacing: 20,

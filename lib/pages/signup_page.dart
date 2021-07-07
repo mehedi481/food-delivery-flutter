@@ -39,7 +39,7 @@ class _SignUpPageState extends State<SignUpPage> {
           .collection("userData")
           .doc(userCredential.user!.uid)
           .set({
-        'firstName': firstName.text.trim(), //TODO: use trim() to avoid white space leading and trailing
+        'firstName': firstName.text.trim(), //Note: use trim() to avoid white space leading and trailing
         'lastName': lastName.text.trim(),
         'email': email.text.trim(),
         'password': password.text.trim(),
@@ -104,7 +104,7 @@ class _SignUpPageState extends State<SignUpPage> {
     password.clear();
   }
 
-  //TODO: use trim() to avoid white space leading and trailing
+  //Note: use trim() to avoid white space leading and trailing
   void validation() {
     if (firstName.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
