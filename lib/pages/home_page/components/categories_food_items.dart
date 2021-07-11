@@ -15,7 +15,7 @@ class CategoriesFoodItems extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.grey),
-                child: Image.asset(
+                child: Image.network(
                   image,
                   fit: BoxFit.contain,
                 ),

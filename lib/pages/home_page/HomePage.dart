@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/helper/image_path.dart';
+import 'package:food_delivery/model/categories_model.dart';
 import 'package:food_delivery/pages/home_page/components/categories_food_items.dart';
 import 'package:food_delivery/pages/home_page/components/drawer.dart';
 import 'package:food_delivery/pages/home_page/components/food_items.dart';
+import 'package:food_delivery/provider/my_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,8 +15,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<CategoriesModel> burgerList = [];
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<MyProvider>(context);
+    provider.getCategories();
+    burgerList = provider.getList;
+
+    // Food item on the top level
+    Widget burger() {
+      return Row(
+        children: burgerList
+            .map((e) => CategoriesFoodItems(image: e.image, imageName: e.name))
+            .toList(),
+      );
+    }
+
     return Scaffold(
       drawer: MyDrawer(),
       appBar: AppBar(
@@ -56,30 +73,31 @@ class _HomePageState extends State<HomePage> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    CategoriesFoodItems(
-                      image: ImagePath.allFood,
-                      imageName: "All",
-                    ),
-                    CategoriesFoodItems(
-                      image: ImagePath.food_1,
-                      imageName: "Pizza",
-                    ),
-                    CategoriesFoodItems(
-                      image: ImagePath.food_2,
-                      imageName: "Drinks",
-                    ),
-                    CategoriesFoodItems(
-                      image: ImagePath.food_4,
-                      imageName: "Brade",
-                    ),
-                    CategoriesFoodItems(
-                      image: ImagePath.food_5,
-                      imageName: "Kabab",
-                    ),
-                    CategoriesFoodItems(
-                      image: ImagePath.food_3,
-                      imageName: "Pasta",
-                    ),
+                    burger()
+                    // CategoriesFoodItems(
+                    //   image: ImagePath.allFood,
+                    //   imageName: "All",
+                    // ),
+                    // CategoriesFoodItems(
+                    //   image: ImagePath.food_1,
+                    //   imageName: "Pizza",
+                    // ),
+                    // CategoriesFoodItems(
+                    //   image: ImagePath.food_2,
+                    //   imageName: "Drinks",
+                    // ),
+                    // CategoriesFoodItems(
+                    //   image: ImagePath.food_4,
+                    //   imageName: "Brade",
+                    // ),
+                    // CategoriesFoodItems(
+                    //   image: ImagePath.food_5,
+                    //   imageName: "Kabab",
+                    // ),
+                    // CategoriesFoodItems(
+                    //   image: ImagePath.food_3,
+                    //   imageName: "Pasta",
+                    // ),
                   ],
                 ),
               ),
@@ -116,37 +134,37 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               Container(height: 50, child: Text("Mehedi")),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    CategoriesFoodItems(
-                      image: ImagePath.allFood,
-                      imageName: "All",
-                    ),
-                    CategoriesFoodItems(
-                      image: ImagePath.food_1,
-                      imageName: "Pizza",
-                    ),
-                    CategoriesFoodItems(
-                      image: ImagePath.food_2,
-                      imageName: "Drinks",
-                    ),
-                    CategoriesFoodItems(
-                      image: ImagePath.food_4,
-                      imageName: "Brade",
-                    ),
-                    CategoriesFoodItems(
-                      image: ImagePath.food_5,
-                      imageName: "Kabab",
-                    ),
-                    CategoriesFoodItems(
-                      image: ImagePath.food_3,
-                      imageName: "Pasta",
-                    ),
-                  ],
-                ),
-              ),
+              // SingleChildScrollView(
+              //   scrollDirection: Axis.horizontal,
+              //   child: Row(
+              //     children: [
+              //       CategoriesFoodItems(
+              //         image: ImagePath.allFood,
+              //         imageName: "All",
+              //       ),
+              //       CategoriesFoodItems(
+              //         image: ImagePath.food_1,
+              //         imageName: "Pizza",
+              //       ),
+              //       CategoriesFoodItems(
+              //         image: ImagePath.food_2,
+              //         imageName: "Drinks",
+              //       ),
+              //       CategoriesFoodItems(
+              //         image: ImagePath.food_4,
+              //         imageName: "Brade",
+              //       ),
+              //       CategoriesFoodItems(
+              //         image: ImagePath.food_5,
+              //         imageName: "Kabab",
+              //       ),
+              //       CategoriesFoodItems(
+              //         image: ImagePath.food_3,
+              //         imageName: "Pasta",
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ],
