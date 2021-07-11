@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/pages/home_page/HomePage.dart';
-import 'package:food_delivery/pages/login_page.dart';
+import 'package:food_delivery/pages/welcomePage.dart';
 import 'package:food_delivery/provider/my_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.hasData) {
               return HomePage();
             } else {
-              return LoginPage();
+              return WelcomePage();
             }
           },
         ),
