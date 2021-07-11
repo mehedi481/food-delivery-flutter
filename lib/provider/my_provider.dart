@@ -10,6 +10,7 @@ class MyProvider with ChangeNotifier {
   get getList => categoriesList;
 
   Future<void> getCategories() async {
+    List<CategoriesModel> newCategoriesList =[];
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection("categories")
         .doc("HSVVzJeBcCNRVjCvzJhQ")
@@ -24,8 +25,8 @@ class MyProvider with ChangeNotifier {
 
       print(categoriesModel.name);
 
-      
-      categoriesList.add(categoriesModel);
+      newCategoriesList.add(categoriesModel);
+      categoriesList = newCategoriesList;
     });
   }
   
