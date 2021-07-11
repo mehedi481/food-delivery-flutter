@@ -1,6 +1,6 @@
 # food_delivery
 
-A new Flutter project.
+A new Flutter project Using Firebase for backend and State Management use Provider
 
 ## Getting Started
 
