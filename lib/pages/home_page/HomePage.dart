@@ -17,16 +17,52 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<CategoriesModel> burgerList = [];
+  List<CategoriesModel> pizzaList = [];
+  List<CategoriesModel> kababList = [];
+  List<CategoriesModel> drinkList = [];
+
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<MyProvider>(context);
-    provider.getCategories();
-    burgerList = provider.getList;
+
+    provider.getBurgerCategories();
+    provider.getPizzaCategories();
+    provider.getKababCategories();
+    provider.getDrinkCategories();
+
+    burgerList = provider.getBurgerList;
+    pizzaList = provider.getPizzaList;
+    kababList = provider.getkababList;
+    drinkList = provider.getDrinkList;
 
     // Food item on the top level
     Widget burger() {
       return Row(
         children: burgerList
+            .map((e) => CategoriesFoodItems(image: e.image, imageName: e.name))
+            .toList(),
+      );
+    }
+
+    Widget pizza() {
+      return Row(
+        children: pizzaList
+            .map((e) => CategoriesFoodItems(image: e.image, imageName: e.name))
+            .toList(),
+      );
+    }
+
+    Widget kabab() {
+      return Row(
+        children: kababList
+            .map((e) => CategoriesFoodItems(image: e.image, imageName: e.name))
+            .toList(),
+      );
+    }
+
+    Widget drink() {
+      return Row(
+        children: drinkList
             .map((e) => CategoriesFoodItems(image: e.image, imageName: e.name))
             .toList(),
       );
@@ -79,7 +115,10 @@ class _HomePageState extends State<HomePage> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      burger()
+                      burger(),
+                      pizza(),
+                      kabab(),
+                      drink(),
                       // CategoriesFoodItems(
                       //   image: ImagePath.allFood,
                       //   imageName: "All",
@@ -102,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                       // ),
                       // CategoriesFoodItems(
                       //   image: ImagePath.food_3,
-                      //   imageName: "Pasta",
+                      //   imageName: "kabab",
                       // ),
                     ],
                   ),
@@ -166,7 +205,7 @@ class _HomePageState extends State<HomePage> {
                 //       ),
                 //       CategoriesFoodItems(
                 //         image: ImagePath.food_3,
-                //         imageName: "Pasta",
+                //         imageName: "kabab",
                 //       ),
                 //     ],
                 //   ),
